@@ -1,44 +1,50 @@
+import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import styles from "./styles.module.scss"
 
 const SignupSchema = Yup.object().shape({
-email: Yup.string().email('Email inválido!').required('Requerido'),
-password: Yup.string()
-.required('Requerido'),
+   email: Yup.string().email('Email inválido!').required('Requerido'),
+   password: Yup.string()
+      .required('Requerido'),
 });
 
-const Login = () =>{
+const Login = () => {
 
 
-   return(
-<div className={styles.container}>
-<h1>Login</h1>
+   return (
+      <div className={styles.container}>
+         <div className={styles.box}>
+            <h1 className={styles.title}>Login</h1>
 
-<Formik
-initialValues={{
-email: '',
-password: '',
-}}
-validationSchema={SignupSchema}
-onSubmit={values => {
-console.log(values);
-}}
->
+            <Formik
+               initialValues={{
+                  email: '',
+                  password: '',
+               }}
+               validationSchema={SignupSchema}
+               onSubmit={values => {
+                  console.log(values);
+               }}
+            >
 
-{({ errors, touched, values }) => (
-<Form>
-<label>Email:</label>
-<Field className={styles.inputForm} name="email" type="email" placeholder="Digite seu Email..." />
-<label>Senha:</label>
-{errors.email && touched.email ? <div>{errors.email}</div> : null}
-<Field className={styles.inputForm} name="password" type="password" placeholder="Digite sua senha..." />
-{errors.password && touched.password ? <div>{errors.password}</div> : null}
-        <button className={styles.buttonForm} type="submit">Entrar</button>
-      </Form>
-    )}
-</Formik>
-</div>
+               {({ errors, touched, values }) => (
+                  <Form>
+                     <label>Email:
+                        <Field className={styles.inputForm} name="email" type="email" placeholder="Digite seu Email..." />
+                     </label>
+                     {errors.email && touched.email ? <div className={styles.error}>{errors.email}</div> : null}
+                     <label>Senha:
+                        <Field className={styles.inputForm} name="password" type="password" placeholder="Digite sua senha..." />
+                     </label>
+                     {errors.password && touched.password ? <div className={styles.error}>{errors.password}</div> : null}
+                     <button className={styles.buttonForm} type="submit">Entrar</button>
+                  </Form>
+               )}
+            </Formik>
+            <Link to="/register">Não é cadastrado?</Link>
+         </div>
+      </div>
    )
 }
 
