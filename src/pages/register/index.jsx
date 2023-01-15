@@ -1,31 +1,29 @@
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-
 import styles from "./styles.module.scss"
 
 const SignupSchema = Yup.object().shape({
 firstName: Yup.string()
-.min(2, 'Too Short!')
-.max(50, 'Too Long!')
-.required('Required'),
-email: Yup.string().email('Invalid email').required('Required'),
+.min(2, 'Curto demais!')
+.max(50, 'Muito grande!')
+.required('Requerido'),
+email: Yup.string().email('Email inválido!').required('Requerido'),
 password: Yup.string()
-.min(8, 'Too Short!')
-.required('Required'),
+.min(8, 'Curta demais!')
+.required('Requerido'),
 confirmPassword: Yup.string()
-.oneOf([Yup.ref('password'), null], 'Passwords must match')
-.required('Required'),
-gender: Yup.string().required('Required')
+.oneOf([Yup.ref('password'), null], 'As senhas tem que ser igual!')
+.required('Requerido'),
+gender: Yup.string().required('Requerido')
 });
 
 const Register = () => {
 return (
-<div>
+<div className={styles.container}>
 <h1>Cadastrar-se</h1>
 <Formik
 initialValues={{
 firstName: '',
-lastName: '',
 email: '',
 password: '',
 confirmPassword: '',
@@ -38,15 +36,15 @@ console.log(values);
 >
 {({ errors, touched, values }) => (
 <Form>
-<Field name="firstName" placeholder="Nome completo" />
+<Field className={styles.inputForm} name="firstName" placeholder="Nome completo" />
 {errors.firstName && touched.firstName ? (
 <div>{errors.firstName}</div>
 ) : null}
-<Field name="email" type="email" placeholder="Digite seu Email" />
+<Field className={styles.inputForm} name="email" type="email" placeholder="Digite seu Email" />
 {errors.email && touched.email ? <div>{errors.email}</div> : null}
-<Field name="password" type="password" placeholder="Crie uma senha" />
+<Field className={styles.inputForm} name="password" type="password" placeholder="Crie uma senha" />
 {errors.password && touched.password ? <div>{errors.password}</div> : null}
-<Field name="confirmPassword" type="password" placeholder="Confirme sua senha" />
+<Field className={styles.inputForm} name="confirmPassword" type="password" placeholder="Confirme sua senha" />
 {errors.confirmPassword && touched.confirmPassword ? <div>{errors.confirmPassword}</div> : null}
 <label>
 Gênero:
@@ -60,7 +58,7 @@ Feminino
 checked={values.gender === 'não informar'} />
 Não informar
 </label>
-        <button type="submit">Submit</button>
+        <button className={styles.buttonForm} type="submit">Submit</button>
       </Form>
     )}
   </Formik>
