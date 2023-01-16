@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import styles from "./styles.module.scss"
+import Api from '../../service/api';
 
 const SignupSchema = Yup.object().shape({
    email: Yup.string().email('Email inválido!').required('Requerido'),
@@ -23,8 +24,14 @@ const Login = () => {
                   password: '',
                }}
                validationSchema={SignupSchema}
-               onSubmit={values => {
+               onSubmit={async(values) => {
                   console.log(values);
+                  try {
+                     await Api.post('/auth/login', values);
+                     alert("Sucesso!")
+                   } catch (error) {
+                     console.log(error, "Erro no login do usuário");
+                   }
                }}
             >
 
